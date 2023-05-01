@@ -1,0 +1,14 @@
+.list {
+  display: flex;
+  column-gap: 16px;
+  padding: 14px 40px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06);
+}
+
+.link {
+  color: black;
+}
+
+.active {
+  color: tomato;
+}
