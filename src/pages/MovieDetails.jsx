@@ -1,20 +1,21 @@
 import MovieDescription from 'components/moviedescription';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import * as API from 'components/servise/api';
 
 const MovieDetails = () => {
+  const [data, setData] = useState({});
   const { movieId } = useParams();
 
-  const [data, setData] = useState({});
-
   useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=95dd584af2ff777437c63600de03549c&language=en-US`
-      );
-      setData(response.data);
-    })();
+    try {
+      (async () => {
+        const movie = await API.ditailsMovies(movieId);
+        setData(movie);
+      })();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, [movieId]);
 
   return (

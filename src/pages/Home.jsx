@@ -6,17 +6,18 @@ const Home = () => {
   const [colectins, setColectins] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const movies = await API.fetchMovies(
-        '/trending/all/day?api_key=95dd584af2ff777437c63600de03549c'
-      );
-      setColectins(movies.results);
-    })();
+    try {
+      (async () => {
+        const movies = await API.trendingMovies();
+        setColectins(movies);
+      })();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
   return (
     <div>
-      <h1>Trending today</h1>
       <TrendingList movies={colectins}></TrendingList>
     </div>
   );
