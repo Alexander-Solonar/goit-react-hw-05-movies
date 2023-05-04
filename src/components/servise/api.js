@@ -30,9 +30,9 @@ export const reviewsMovies = async movieId => {
   return response.data.results;
 };
 
-export const searchMovies = async () => {
+export const searchMovies = async movie => {
   const response = await axios.get(
-    `search/movie?api_key=95dd584af2ff777437c63600de03549c&language=en-US&page=1&include_adult=false`
+    `search/movie?api_key=95dd584af2ff777437c63600de03549c&language=en-US&query=${movie}&page=1&include_adult=false`
   );
-  return response;
+  return response.data.results;
 };

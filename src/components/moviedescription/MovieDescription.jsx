@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import css from './MovieDescription.module.css';
 
 const MovieDescription = ({ information }) => {
@@ -8,33 +7,31 @@ const MovieDescription = ({ information }) => {
     overview,
     release_date = '',
     genres = [],
+    vote_average,
   } = information;
 
-  const x = genres.map(el => el.name); ///!!!!!!!!!!!!!!!!!!!
+  const userScore = Math.round(vote_average * 10);
+  const normalizeGanres = genres.map(el => el.name).join(' ');
   const date = release_date.slice(0, 4);
 
   return (
     <div className={css.container}>
-      <div className={css.box}>
-        <div className={css.image}>
-          <img
-            src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${poster_path}`}
-            alt=""
-          />
-        </div>
-        <div>
-          <h2 className={css.title}>
-            {title} ({date})
-          </h2>
-          <p>User Score: </p>
-          <h3 className={css.overview}>Overview</h3>
-          <p>{overview}</p>
-          <h4 className={css.genres}>Genres</h4>
-          <p>{x.join(' ')}</p>
-        </div>
+      {poster_path && (
+        <img
+          src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
+          alt={title}
+        />
+      )}
+      <div>
+        <h2 className={css.title}>
+          {title} ({date})
+        </h2>
+        <p>User Score: {userScore}%</p>
+        <h3 className={css.overview}>Overview</h3>
+        <p>{overview}</p>
+        <h4 className={css.genres}>Genres</h4>
+        <p>{normalizeGanres}</p>
       </div>
-
-      <p className={css.inform}>Additional information</p>
     </div>
   );
 };

@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as API from '../servise/api';
-import { useEffect, useState } from 'react';
 import css from './CastList.module.css';
 
 const CastList = () => {
@@ -19,10 +19,12 @@ const CastList = () => {
       {actor.map(({ cast_id, character, name, profile_path }) => (
         <li key={cast_id}>
           <div className={css.image}>
-            <img
-              src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${profile_path}`}
-              alt={name}
-            />
+            {profile_path && (
+              <img
+                src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${profile_path}`}
+                alt={name}
+              />
+            )}
           </div>
           <p>{name}</p>
           <p>Character: {character}</p>

@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as API from '../servise/api';
-import { useEffect, useState } from 'react';
 
 const Reviews = () => {
   const { movieId } = useParams();
@@ -16,8 +16,23 @@ const Reviews = () => {
       console.log(error.message);
     }
   }, [movieId]);
-  console.log(review);
-  return <div>Hello!</div>;
+
+  return (
+    <div>
+      {review.length === 0 ? (
+        <h2>{'We do not have any rewiews for this movie'}</h2> //11111111111111111111111
+      ) : (
+        <ul>
+          {review.map(({ author, content, id }) => (
+            <li key={id}>
+              <h4>Author: {author}</h4>
+              <p>{content}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
 
 export default Reviews;

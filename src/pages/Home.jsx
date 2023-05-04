@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import TrendingList from 'components/trendingList/';
+import { useLocation, Link } from 'react-router-dom';
 import * as API from 'components/servise/api';
 
 const Home = () => {
   const [colectins, setColectins] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     try {
@@ -18,7 +19,17 @@ const Home = () => {
 
   return (
     <div>
-      <TrendingList movies={colectins}></TrendingList>
+      <h1>Trending today</h1>
+      <ul>
+        {colectins.map(({ id, title, name }) => (
+          <li key={id}>
+            <Link to={`movies/${id}`} state={{ from: location }}>
+              {title}
+              {name}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

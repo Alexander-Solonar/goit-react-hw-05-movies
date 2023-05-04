@@ -1,17 +1,20 @@
-import MovieDescription from 'components/moviedescription';
-import { Link, Outlet, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import * as API from 'components/servise/api';
+import MovieDescription from 'components/moviedescription';
 
 const MovieDetails = () => {
-  const [data, setData] = useState({});
+  const [movie, setMovie] = useState({});
   const { movieId } = useParams();
+
+  const location = useLocation();
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     try {
       (async () => {
-        const movie = await API.ditailsMovies(movieId);
-        setData(movie);
+        const response = await API.ditailsMovies(movieId);
+        setMovie(response);
       })();
     } catch (error) {
       console.log(error.message);
@@ -20,7 +23,9 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <MovieDescription information={data} />
+      <Link to={backLinkHref.current}> ←Go back</Link>
+      <MovieDescription information={movie} />
+      <p>Additional information</p>
       <ul>
         <li>
           <Link to="cast">Cast</Link>
@@ -29,9 +34,7 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };
