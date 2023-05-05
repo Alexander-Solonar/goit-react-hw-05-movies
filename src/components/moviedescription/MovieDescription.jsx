@@ -1,6 +1,12 @@
+import { useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import css from './MovieDescription.module.css';
 
 const MovieDescription = ({ information }) => {
+  const location = useLocation();
+  const backLinkHref = useRef(location.state?.from ?? '/');
+
   const {
     poster_path,
     title,
@@ -16,24 +22,40 @@ const MovieDescription = ({ information }) => {
 
   return (
     <div className={css.container}>
-      {poster_path && (
-        <img
-          src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
-          alt={title}
-        />
-      )}
-      <div>
-        <h2 className={css.title}>
-          {title} ({date})
-        </h2>
-        <p>User Score: {userScore}%</p>
-        <h3 className={css.overview}>Overview</h3>
-        <p>{overview}</p>
-        <h4 className={css.genres}>Genres</h4>
-        <p>{normalizeGanres}</p>
+      <Link to={backLinkHref.current} className={css['btn-back']}>
+        ←Go back
+      </Link>
+      <div className={css.inner}>
+        {poster_path && (
+          <img
+            src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
+            alt={title}
+          />
+        )}
+        <div className={css['boix-inform']}>
+          <h2>
+            {title} ({date})
+          </h2>
+          <p>User Score: {userScore}%</p>
+          <h3>Overview</h3>
+          <p>{overview}</p>
+          <h4>Genres</h4>
+          <p>{normalizeGanres}</p>
+        </div>
       </div>
     </div>
   );
+};
+
+MovieDescription.propTypes = {
+  information: PropTypes.shape({
+    poster_path: PropTypes.string,
+    title: PropTypes.string,
+    overview: PropTypes.string,
+    release_date: PropTypes.string,
+    vote_average: PropTypes.number,
+    genres: PropTypes.array,
+  }),
 };
 
 export default MovieDescription;

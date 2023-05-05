@@ -1,14 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { useState, useEffect, Suspense } from 'react';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import * as API from 'components/servise/api';
 import MovieDescription from 'components/moviedescription';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const { movieId } = useParams();
-
-  const location = useLocation();
-  const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     try {
@@ -23,7 +20,6 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <Link to={backLinkHref.current}> ←Go back</Link>
       <MovieDescription information={movie} />
       <p>Additional information</p>
       <ul>
@@ -34,7 +30,9 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

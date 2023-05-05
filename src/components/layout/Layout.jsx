@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import css from './Layout.module.css';
 
@@ -24,8 +25,10 @@ const Layout = () => {
           </li>
         </ul>
       </header>
-      <main>
-        <Outlet />
+      <main className={css.main}>
+        <Suspense>
+          <Outlet />
+        </Suspense>
       </main>
     </div>
   );

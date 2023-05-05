@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation, Link, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as API from '../components/servise/api';
+import MovesList from 'components/moviesList';
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
+  const [collectionMovies, setCollectionMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
@@ -16,7 +17,7 @@ const Movies = () => {
     }
     (async () => {
       const response = await API.searchMovies(query);
-      setMovies(response);
+      setCollectionMovies(response);
     })();
   }, [query]);
 
@@ -35,17 +36,10 @@ const Movies = () => {
           <button type="submit">Search</button>
         </Form>
       </Formik>
-
-      <ul>
-        {movies.map(({ id, title, name }) => (
-          <li key={id}>
-            <Link to={`${id}`} state={{ from: location }}>
-              {title}
-              {name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <MovesList
+        collection={collectionMovies}
+        locationFrom={{ from: location }}
+      />
     </div>
   );
 };
