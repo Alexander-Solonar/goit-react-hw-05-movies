@@ -1,12 +1,8 @@
-import { useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import css from './moviePreview.module.css';
+import defaultPicture from '../../defaultPicture/default-pic.jpg';
+import css from './MoviePreview.module.css';
 
 const MoviePreview = ({ information }) => {
-  const location = useLocation();
-  const backLinkHref = useRef(location.state?.from ?? '/');
-
   const {
     poster_path,
     title,
@@ -22,26 +18,24 @@ const MoviePreview = ({ information }) => {
 
   return (
     <div className={css.container}>
-      <Link to={backLinkHref.current} className={css['btn-back']}>
-        ←Go back
-      </Link>
-      <div className={css.inner}>
-        {poster_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
-            alt={title}
-          />
-        )}
-        <div className={css['boix-inform']}>
-          <h2>
-            {title} ({date})
-          </h2>
-          <p>User Score: {userScore}%</p>
-          <h3>Overview</h3>
-          <p>{overview}</p>
-          <h4>Genres</h4>
-          <p>{normalizeGanres}</p>
-        </div>
+      {poster_path ? (
+        <img
+          src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
+          alt={title}
+        />
+      ) : (
+        <img src={defaultPicture} alt="Default-Pic" width="200" />
+      )}
+
+      <div className={css['boix-inform']}>
+        <h2>
+          {title} ({date})
+        </h2>
+        <p>User Score: {userScore}%</p>
+        <h3>Overview</h3>
+        <p>{overview}</p>
+        <h4>Genres</h4>
+        <p>{normalizeGanres}</p>
       </div>
     </div>
   );
