@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import css from './MovieDescription.module.css';
+import css from './moviePreview.module.css';
 
-const MovieDescription = ({ information }) => {
+const MoviePreview = ({ information }) => {
   const location = useLocation();
   const backLinkHref = useRef(location.state?.from ?? '/');
 
@@ -47,7 +47,7 @@ const MovieDescription = ({ information }) => {
   );
 };
 
-MovieDescription.propTypes = {
+MoviePreview.propTypes = {
   information: PropTypes.shape({
     poster_path: PropTypes.string,
     title: PropTypes.string,
@@ -58,4 +58,4 @@ MovieDescription.propTypes = {
   }),
 };
 
-export default MovieDescription;
+export default MoviePreview;
