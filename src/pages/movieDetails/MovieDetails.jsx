@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense, useRef } from 'react';
 import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { Audio } from 'react-loader-spinner';
 import * as API from '../../servise/api';
-import MoviePreview from 'components/moviePreview';
+import MovieDescription from 'components/movieDescription';
 import css from './MovieDetails.module.css';
 
 const MovieDetails = () => {
@@ -36,7 +36,7 @@ const MovieDetails = () => {
 
       {!isLoading && !isError && (
         <div>
-          <MoviePreview information={movie} />
+          <MovieDescription information={movie} />
           <p>Additional information</p>
           <ul>
             <li>
