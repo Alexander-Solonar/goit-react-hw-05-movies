@@ -10,8 +10,8 @@ const MovesList = ({ collection }) => {
       {collection.map(({ id, title, name, original_title, original_name }) => (
         <li key={id}>
           <Link to={`/movies/${id}`} state={{ from: location }}>
-            {title && original_title}
-            {name && original_name}
+            {title || original_title}
+            {name || original_name}
           </Link>
         </li>
       ))}
